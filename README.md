@@ -1,5 +1,5 @@
 # thrly_custom_plotter
- setting up DIY pen plotter
+ notes from building and setting up a DIY pen plotter
 
 # Tools I'm using
 
@@ -8,9 +8,13 @@
 - Universal Gcode Sender - https://universalgcodesender.com/
 - (or) cncjs
 - grbl pen servo - download and install instead of vanilla GRBL (install in the same way) https://github.com/bdring/Grbl_Pen_Servo/tree/master
+- the plotter -  https://github.com/andrewsleigh/plotter/tree/master
 
+# Notes
 ## command to convert .SVG into ready-to-print GCode:
-`vpype --config thrly-config.toml read test.svg linemerge linesort gwrite --profile thrly test_optim.gcode`
+
+`vpype --config thrly-config.toml read input.svg linemerge linesort gwrite --profile thrly output.gcode`
+
 loads the custom config toml file, located in whichever directory you need it. The contents of that file is:
 
 ```
@@ -35,10 +39,17 @@ info= "Inverted across the y-axis. Gcode ready to print. File created succesfull
 ```
 
 ## GRBL (Pen Servo)
-I had to modify the pen-up/down positions in `spindle_control.c`:
+I had to modify the pen-up/down positions in `spindle_control.c` before uploading to Arduino:
 ```
 #define PEN_SERVO_DOWN     31      
 #define PEN_SERVO_UP       25
 ```
 
 In the GCode, Z0 = pen down; Z>0 = pen up
+
+## To Do
+[] Machine calibration details (from UGS?)
+[] details of CNC shield assembly + 12V mod
+[] link to Andrew Sleigh's site / 3d print files
+[] notes on build
+[] notes on software setup
