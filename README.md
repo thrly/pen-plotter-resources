@@ -36,7 +36,9 @@ info= "Inverted across the y-axis. Gcode ready to print. File created succesfull
 
 ## GRBL (Pen Servo)
 I had to modify the pen-up/down positions in `spindle_control.c`:
-```#define PEN_SERVO_DOWN     31      
-#define PEN_SERVO_UP       25```
+```
+#define PEN_SERVO_DOWN     31      
+#define PEN_SERVO_UP       25
+```
 
 In the GCode, Z0 = pen down; Z>0 = pen up
