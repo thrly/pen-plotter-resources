@@ -11,6 +11,12 @@
 - the plotter -  https://github.com/andrewsleigh/plotter/tree/master
 
 # Notes
+
+## workflow
+1. Create .SVG in Processing/P5js/Inkscape
+2. Optimise SVG and convert to GCode with `vpype` and `vpype-gcode`
+3. Send GCode to modified GRBL on Arduino/CNC shield, controlling the plotter (this has to be done 'live').
+
 ## command to convert .SVG into ready-to-print GCode:
 
 `vpype --config thrly-config.toml read input.svg linemerge linesort gwrite --profile thrly output.gcode`
