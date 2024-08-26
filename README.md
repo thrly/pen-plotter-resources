@@ -54,8 +54,15 @@ I had to modify the pen-up/down positions in `spindle_control.c` before uploadin
 In the GCode, Z0 = pen down; Z>0 = pen up
 
 ## To Do
-[] Machine calibration details (from UGS?)
-[] details of CNC shield assembly + 12V mod
-[] link to Andrew Sleigh's site / 3d print files
-[] notes on build
-[] notes on software setup
+- Machine calibration details (from UGS?)
+- details of CNC shield assembly + 12V mod
+- link to Andrew Sleigh's site / 3d print files
+- notes on build
+- notes on software setup
+
+## Future plans
+- Redesign pen holder to make servo more easily replaceable
+- Redesign pen holder to make detachable and easily mountable at 45 degrees (see Axidraw design)
+- Taller feet with spacer for board/paper alignment
+- Flip for left-right motion, better 0,0 home
+- End stop limit-switches for homing?
