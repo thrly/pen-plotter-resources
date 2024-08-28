@@ -10,8 +10,8 @@
 - grbl pen servo - download and install instead of vanilla GRBL (install in the same way) https://github.com/bdring/Grbl_Pen_Servo/tree/master
 
 ## command to convert .SVG into ready-to-print GCode:
-`vpype --config thrly-config.toml read test.svg linemerge linesort gwrite --profile thrly test_optim.gcode`
-loads the custom config toml file, located in whichever directory you need it. The contents of that file is:
+`vpype --config thrly-config.toml read in_file.svg linemerge linesort gwrite --profile thrly output_file.gcode`
+This command loads the custom config toml file, located in whichever directory you need it. The contents of that file is:
 
 ```
 [gwrite.thrly]
