@@ -5,21 +5,25 @@
 
 - vpype - https://github.com/abey79/vpype
 - vpype-gcode (plugin) - https://github.com/plottertools/vpype-gcode
+- vpype occult (plugin)
 - Universal Gcode Sender - https://universalgcodesender.com/
 - (or) cncjs
 - grbl pen servo - download and install instead of vanilla GRBL (install in the same way) https://github.com/bdring/Grbl_Pen_Servo/tree/master
 - the plotter -  https://github.com/andrewsleigh/plotter/tree/master
+- axidraw CLI / inkscape plugins - for removing hidden layers with `--hiding` (works better than `vpype occult -i` - https://axidraw.com/doc/cli_api/#installation
 
 # Notes
 
 ## workflow
 1. Create .SVG in Processing/P5js/Inkscape
-2. Optimise SVG and convert to GCode with `vpype` and `vpype-gcode`
-3. Send GCode to modified GRBL on Arduino/CNC shield, controlling the plotter (this has to be done 'live').
+2. Optimise SVG and convert to GCode with `vpype` and `vpype-gcode`. For SVGs with a lot of hidden layers, I've found the Axidraw CLI `--hiding` tool works better than vpype's `occult` plugin.
+   If using AxiCLI use: `axicli file.svg -h -o outputfile.svg` to remove hidden lines.
+   Preview plot with vpype's `show` command instead of final output. E.g.: `vpype read input.svg occult -i linemerge linesort linesimplify show`
+4. Send GCode to modified GRBL on Arduino/CNC shield, controlling the plotter (this has to be done 'live').
 
 ## command to convert .SVG into ready-to-print GCode:
 
-`vpype --config thrly-config.toml read input.svg linemerge linesort gwrite --profile thrly output.gcode`
+`vpype --config thrly-config.toml read input.svg occult -i linemerge linesort linesimplify gwrite --profile thrly output.gcode`
 
 loads the custom config toml file, located in whichever directory you need it. The contents of that file is:
 
