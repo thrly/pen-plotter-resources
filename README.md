@@ -10,7 +10,7 @@
 - (or) cncjs
 - grbl pen servo - download and install instead of vanilla GRBL (install in the same way) https://github.com/bdring/Grbl_Pen_Servo/tree/master
 - the plotter -  https://github.com/andrewsleigh/plotter/tree/master
-- axidraw CLI / inkscape plugins - for removing hidden layers with `--hiding` (works better than `vpype occult -i` - https://axidraw.com/doc/cli_api/#installation
+- axidraw CLI / inkscape plugins - for removing hidden layers with `--hiding` (works better than `vpype occult -i` - https://axidraw.com/doc/cli_api/#installation [EDIT: this didn't really work as well as hoped on the Truchet patterns...]
 
 # Notes
 
@@ -51,11 +51,13 @@ info= "Inverted across the y-axis. Gcode ready to print. File created succesfull
 ## GRBL (Pen Servo)
 I had to modify the pen-up/down positions in `spindle_control.c` before uploading to Arduino:
 ```
-#define PEN_SERVO_DOWN     31      
+#define PEN_SERVO_DOWN     31      (maybe this should come up a little higher?)
 #define PEN_SERVO_UP       25
 ```
 
 In the GCode, Z0 = pen down; Z>0 = pen up
+
+Once the plotter is setup and running, it needs calibrating via GRBL. See: https://szymonkaliski.com/writing/2023-10-02-building-a-diy-pen-plotter/ and https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration 
 
 ## To Do
 - Machine calibration details (from UGS?)
@@ -68,5 +70,5 @@ In the GCode, Z0 = pen down; Z>0 = pen up
 - Redesign pen holder to make servo more easily replaceable
 - Redesign pen holder to make detachable and easily mountable at 45 degrees (see Axidraw design)
 - Taller feet with spacer for board/paper alignment
-- Flip for left-right motion, better 0,0 home
-- End stop limit-switches for homing?
+- Flip for left-right motion, better 0,0 home (or use invert commands in vpype?)
+- End stop limit-switches for homing? (ordered, spet 2024)
