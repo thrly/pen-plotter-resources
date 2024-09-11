@@ -102,7 +102,7 @@ info= "Profile settings stored in thrly-config.toml\nInverted across the y-axis.
 I had to modify the pen-up/down positions in `spindle_control.c` before uploading to Arduino:
 ```
 #define PEN_SERVO_DOWN     31      (maybe this should come up a little higher?)
-#define PEN_SERVO_UP       25
+#define PEN_SERVO_UP       22
 ```
 
 In the GCode, Z0 = pen down; Z>0 = pen up
