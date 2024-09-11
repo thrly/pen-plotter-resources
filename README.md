@@ -35,17 +35,17 @@ $27=1.000 (Homing switch pull-off distance, millimeters)
 $30=1000 (Maximum spindle speed, RPM)
 $31=0 (Minimum spindle speed, RPM)
 $32=0 (Laser-mode enable, boolean)```
-`$100=53.273 (X-axis travel resolution, step/mm)` ; calibration for X and Y axes
-`$101=80.355 (Y-axis travel resolution, step/mm)`
-`$102=250.000 (Z-axis travel resolution, step/mm)`
-`$110=8000.000 (X-axis maximum rate, mm/min)` ; set speed for X and Y motor (this could maybe go up, grbl docs say find max and set to 80-90%)
-`$111=8000.000 (Y-axis maximum rate, mm/min)`
-`$112=1000.000 (Z-axis maximum rate, mm/min)`
-`$120=200.000 (X-axis acceleration, mm/sec^2)` ; this is like the rate, but specifically acceleration. again this could maybe go up, but I'm being cautious for jerking the pen
-```$121=200.000 (Y-axis acceleration, mm/sec^2)
+$100=53.273 (X-axis travel resolution, step/mm) ; calibration for X axes
+$101=80.355 (Y-axis travel resolution, step/mm) ; calibration for Y axes
+$102=250.000 (Z-axis travel resolution, step/mm)
+$110=8000.000 (X-axis maximum rate, mm/min) ; set speed motor (this could maybe go up, grbl docs say find max and set to 80-90%)
+$111=8000.000 (Y-axis maximum rate, mm/min) ; set speed motor (this could maybe go up, grbl docs say find max and set to 80-90%)
+$112=1000.000 (Z-axis maximum rate, mm/min)
+$120=200.000 (X-axis acceleration, mm/sec^2) ; this is like the rate, but specifically acceleration. again this could maybe go up, but I'm being cautious for jerking the pen
+$121=200.000 (Y-axis acceleration, mm/sec^2) ; this is like the rate, but specifically acceleration. again this could maybe go up, but I'm being cautious for jerking the pen
 $122=100.000 (Z-axis acceleration, mm/sec^2)
-$130=200.000 (X-axis maximum travel, millimeters)
-$131=200.000 (Y-axis maximum travel, millimeters)
+$130=200.000 (X-axis maximum travel, millimeters) ; soft-limits, I've not adjusted this yet as I'm planning to implement limit-switches then adjust these values
+$131=200.000 (Y-axis maximum travel, millimeters) ; soft-limits, I've not adjusted this yet as I'm planning to implement limit-switches then adjust these values
 $132=200.000 (Z-axis maximum travel, millimeters)
 ```
 # Notes
