@@ -97,6 +97,18 @@ invert_y = true
 
 info= "Profile settings stored in thrly-config.toml\nInverted across the y-axis. Gcode ready to print. File created succesfully."
 ```
+## multi-coloured SVG to multi-layer gcode
+In vpype, read the svg, splitting layers by stroke (`read -a stroke`), then delete all layers, keeping the one you want (`ldelete --keep 1`)
+For example:
+ First, inspect your layers to see which is which (take note of the layer number):
+ 
+ `vpype read --no-crop -a stroke circle-packed.svg show`
+ 
+ Then run the command to render your gcode for the desired layer:
+ 
+ `vpype -c thrly-config.toml read --no-crop -a stroke circle-packed.svg ldelete --keep 1 layout -m 3cm 282x210mm pagerotate linemerge reloop linesort gwrite -p fast-plot circle-pack-layer-1.gcode`
+ 
+ Then repeat for each layer.
 
 ## GRBL (Pen Servo)
 I had to modify the pen-up/down positions in `spindle_control.c` before uploading to Arduino:
