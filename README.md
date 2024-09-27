@@ -117,6 +117,19 @@ invert_y = true
 
 info= "Profile settings stored in thrly-config.toml\nInverted across the y-axis. Gcode ready to print. File created succesfully."
 ```
+## splitting a multi-coloured SVG into to multi-layer gcode
+Sometimes you'll want to plot in multiple pens, colours, etc. To do that, you can split an SVG into multiple layers, each layer getting its own gcode to plot (be careful to align your pen nib for each layer...)
+In vpype, read the svg, splitting layers by stroke (`read -a stroke`), then delete all layers, keeping the one you want (`ldelete --keep 1`)
+For example:
+ First, inspect your layers to see which is which (take note of the layer number):
+ 
+ `vpype read --no-crop -a stroke circle-packed.svg show`
+ 
+ Then run the command to render your gcode for the desired layer:
+ 
+ `vpype -c thrly-config.toml read --no-crop -a stroke circle-packed.svg ldelete --keep 1 layout -m 3cm 282x210mm pagerotate linemerge reloop linesort gwrite -p fast-plot circle-pack-layer-1.gcode`
+ 
+ Then repeat for each layer.
 
 ## GRBL (Pen Servo)
 
