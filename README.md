@@ -23,7 +23,7 @@
 
 ## command to convert .SVG into ready-to-print GCode:
 
-`vpype --config thrly-config.toml read input.svg occult -i linemerge linesort linesimplify gwrite --profile thrly output.gcode`
+`vpype --config thrly-config.toml read input.svg occult -i linemerge linesort linesimplify reloop gwrite --profile thrly output.gcode`
 
 loads the custom config toml file, located in whichever directory you need it. The contents of that file is:
 
