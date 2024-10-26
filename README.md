@@ -84,10 +84,7 @@ loads the custom config toml file, located in whichever directory you need it. T
 
 ## vpype-gcode custom profiles
 ```
-########################################################################################################################
-# Custom Profile
-########################################################################################################################
-[gwrite.plotter]
+[gwrite.fast-plot]
 unit = "mm"
 document_start = """
 G90       ; absolute coordinates
@@ -115,8 +112,10 @@ M2"""
 
 invert_y = true
 
-info= "Profile settings stored in thrly-config.toml\nInverted across the y-axis. Gcode ready to print. File created succesfully."
+info= "FAST PLOT. All G00 movements. Gcode ready to print. File created succesfully."
 ```
+see .toml file for other profiles.
+
 ## splitting a multi-coloured SVG into to multi-layer gcode
 Sometimes you'll want to plot in multiple pens, colours, etc. To do that, you can split an SVG into multiple layers, each layer getting its own gcode to plot (be careful to align your pen nib for each layer...)
 In vpype, read the svg, splitting layers by stroke (`read -a stroke`), then delete all layers, keeping the one you want (`ldelete --keep 1`)
@@ -127,8 +126,9 @@ For example:
  
  Then run the command to render your gcode for the desired layer:
  
- `vpype -c thrly-config.toml read --no-crop -a stroke circle-packed.svg ldelete --keep 1 layout -m 3cm 282x210mm pagerotate linemerge reloop linesort gwrite -p fast-plot circle-pack-layer-1.gcode`
+ `vpype -c thrly-config.toml read --no-crop -a stroke circle-packed.svg layout -m 3cm 282x210mm pagerotate ldelete --keep 1 linemerge reloop linesort gwrite -p fast-plot circle-pack-layer-1.gcode`
  
+ Ensure that you delete the layers _after_ setting your layout/scale/position, otherwise the layers will be out of alignment with each other.
  Then repeat for each layer.
 
 ## GRBL (Pen Servo)
@@ -144,6 +144,9 @@ In the GCode, Z0 = pen down; Z>0 = pen up
 
 Once the plotter is setup and running, it needs calibrating via GRBL. See: <https://szymonkaliski.com/writing/2023-10-02-building-a-diy-pen-plotter/> and <https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration>
 
+## End stops
+I added end-stop limit switches to the X and Y axes, but ended up de-activating them. The hassle of unlocking the arm each time didn't seem worth it. I'm rarely working with files that aren't well within the limits, and I just make sure to check my scaling.
+
 ## To Do
 
 - Machine calibration details (from UGS?)
@@ -158,4 +161,3 @@ Once the plotter is setup and running, it needs calibrating via GRBL. See: <http
 - Redesign pen holder to make detachable and easily mountable at 45 degrees (see Axidraw design)
 - Taller feet with spacer for board/paper alignment
 - Flip for left-right motion, better 0,0 home (or use invert commands in vpype?)
-- End stop limit-switches for homing? (ordered, spet 2024)
