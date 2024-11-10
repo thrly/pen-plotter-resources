@@ -1,21 +1,10 @@
-# thrly_custom_plotter
+# Pen Plotting
 
- notes from building and setting up a DIY pen plotter
-
-# Tools I'm using
-
-- vpype - <https://github.com/abey79/vpype>
-- vpype-gcode (plugin) - <https://github.com/plottertools/vpype-gcode>
-- vpype occult (plugin)
-- Universal Gcode Sender - <https://universalgcodesender.com/>
-- (or) cncjs
-- grbl pen servo - download and install instead of vanilla GRBL (install in the same way) <https://github.com/bdring/Grbl_Pen_Servo/tree/master>
-- the plotter -  <https://github.com/andrewsleigh/plotter/tree/master>
-- axidraw CLI / inkscape plugins - for removing hidden layers with `--hiding` (works better than `vpype occult -i` - <https://axidraw.com/doc/cli_api/#installation> [EDIT: this didn't really work as well as hoped on the Truchet patterns...]
+notes from building and setting up a DIY pen plotter
 
 ## Building the plotter
 
-I've used the X-Y plotter design (like the Axidraw/Next draw) [designed by Andrew Sleigh (v3)](https://andrewsleigh.github.io/plotter/). I 3D printed the parts (PLA seems fine) and opted for a 700mm v-slot X-axis, and a 500mm linear rails Y-axis. This gives me a working plotting area of about 420mm x 300 mm, which is frustratingly a bit short to print A2 sized-plots. (Luckily, because DIY, I only have to buy a new v-slot and rails to upgrade. I have noticed some 'drooping' on the Y-axis, so going beyond the current size might cause problems there. If I do need to scale up, I might look at an H-system...)(in the UK, I purchased most parts from <https://ooznest.co.uk>). I would guess that the whole build cost me under £180 (2024)?
+I've used the X-Y plotter design (like the Axidraw/Next draw) [designed by Andrew Sleigh (v3)](https://andrewsleigh.github.io/plotter/). I 3D printed the parts (PLA seems fine) and opted for a 700mm v-slot X-axis, and a 500mm linear rails Y-axis. This gives me a working plotting area of about 420mm x 300 mm, which is frustratingly a bit short to print A2 sized-plots. (Luckily, because DIY, I only have to buy a new v-slot and rails to upgrade. I have noticed some 'drooping' on the Y-axis, so going beyond the current size might cause problems there. If I do need to scale up, I might look at an H-system...)(in the UK, I purchased most parts from <https://ooznest.co.uk>). I would guess that the whole build cost me under £150 (2024)?
 
 ### arduino + shield + drivers
 
@@ -23,7 +12,7 @@ The plotter runs off an Arduino (Elegoo R3) with a CNC shield (protoneer clone).
 
 ### modifications
 
-The only modifications to Sleigh's design were printing taller foot extenders (with a 90 degree jig for paper alignment, which doesn't help) and a redesigned arduino bracket. I found the original box didn't account for heat sinks, was fiddly to install and took a long time to print. I've opted for an open mount, with a bracket to hold a 40 mm fan pointed at the heat sinks...
+The only modifications to Sleigh's design were printing taller foot extenders (with a 90 degree jig for paper alignment, which doesn't help) and a redesigned arduino bracket. I found the original box didn't account for heat sinks, was fiddly to install and took a long time to print. I've opted for an open mount, with a bracket to hold a 40 mm fan pointed at the heat sinks... (TODO: add .stl files for these)
 
 ### limit switches
 
@@ -145,10 +134,23 @@ In the GCode, Z0 = pen down; Z>0 = pen up
 Once the plotter is setup and running, it needs calibrating via GRBL. See: <https://szymonkaliski.com/writing/2023-10-02-building-a-diy-pen-plotter/> and <https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration>
 
 ## End stops
-I added end-stop limit switches to the X and Y axes, but ended up de-activating them. The hassle of unlocking the arm each time didn't seem worth it. I'm rarely working with files that aren't well within the limits, and I just make sure to check my scaling.
+I added end-stop limit switches to the X and Y axes, but I'm not sure how useful they are in reality. Sure it will stop a collision, but adds the hassle of unlocking the arm each time I turn the machine on. I'm rarely working with files that aren't well within the limits, and if I check my scaling and measurements, collisions are unlikely.
 
-## To Do
+## Tools I'm using
 
+- the plotter -  <https://github.com/andrewsleigh/plotter/tree/master>
+- grbl pen servo - download and install instead of vanilla GRBL (install in the same way) <https://github.com/bdring/Grbl_Pen_Servo/tree/master>
+- Processing or P5JS for designing stuff
+- vpype - <https://github.com/abey79/vpype>
+- vpype-gcode (plugin) - <https://github.com/plottertools/vpype-gcode>
+- vpype occult (plugin) for hidden line removal
+- cncjs - <https://cnc.js.org/>
+- also some luck with - Universal Gcode Sender - <https://universalgcodesender.com/>
+
+
+## Details to add
+
+- add images
 - Machine calibration details (from UGS?)
 - details of CNC shield assembly + 12V mod
 - link to Andrew Sleigh's site / 3d print files
@@ -158,6 +160,5 @@ I added end-stop limit switches to the X and Y axes, but ended up de-activating 
 ## Future plans
 
 - Redesign pen holder to make servo more easily replaceable
-- Redesign pen holder to make detachable and easily mountable at 45 degrees (see Axidraw design)
-- Taller feet with spacer for board/paper alignment
-- Flip for left-right motion, better 0,0 home (or use invert commands in vpype?)
+- Redesign pen holder to make detachable and easily mountable at 45 degrees for fountain pens (see Axidraw design)
+- Add stl fils for my custom board mount and feet.
