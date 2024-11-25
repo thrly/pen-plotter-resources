@@ -1,4 +1,4 @@
-# Pen Plotting
+# plotter, a robot that draws
 
 notes from building and setting up a DIY pen plotter
 
@@ -8,19 +8,19 @@ notes from building and setting up a DIY pen plotter
 
 ### what?
 
-I've used the X-Y plotter design (like the Axidraw/Next draw) [designed by Andrew Sleigh (v3)](https://andrewsleigh.github.io/plotter/). The design is simple, and the build was easy to work out. Andrew's design and guide is *excellent*. There isn't more I need to add there, go and build it!
+I've used the X-Y plotter (like the Axidraw/Next draw) [designed by Andrew Sleigh (v3)](https://andrewsleigh.github.io/plotter/). The design is simple, and the build was easy enough to work out. Andrew's design and guide is *excellent*. There isn't more I need to add really, go and build it!
 
-### notes on build
+### reflections
 
-I 3D printed the parts (PLA seems fine) and opted for a 700mm v-slot X-axis, and a 500mm linear rails Y-axis. This gives me a working plotting area of about 420mm x 300 mm, which is frustratingly just a bit short to print A2 sized-plots. If I were doing this again, I would probably go for something more appropriate the A3. (Luckily, because DIY, I only have to buy a new v-slot and rails to upgrade).
+- I 3D printed the parts (PLA seems fine) and opted for a 700mm v-slot X-axis, and a 500mm linear rails Y-axis. This gives me a working plotting area of about 420mm x 300 mm, which is frustratingly just a bit short to print A2 sized-plots. If I were doing this again, I would probably go for something more appropriate the A3. (Luckily, because DIY, I only have to buy a new v-slot and rails to upgrade).
 
-I have noticed some slight 'drooping' on the Y-axis arm, so going beyond the current size might cause problems there. If I do need to scale up, I might look at an H-system design, as seen in the [ACRO](https://www.instructables.com/ACRO-Openbuilds-Pen-Plotter-Arduino-With-GRBL-and-/), Unatek, and more recently, the Bantam ArtFrame designs.
+- I have noticed some slight 'drooping' on the Y-axis arm, so going beyond the current size might cause problems there. If I do need to scale up, I might look at an H-system design, as seen in the [ACRO](https://www.instructables.com/ACRO-Openbuilds-Pen-Plotter-Arduino-With-GRBL-and-/), Unatek, and more recently, the Bantam ArtFrame designs.
 
-The BOM on Sleigh's post is good. In the UK, I purchased most parts from <https://ooznest.co.uk>. I would guess that the whole build cost me under £150 (2024)?
+- The BOM on Sleigh's post is good. In the UK, I purchased most parts from <https://ooznest.co.uk>. I would guess that the whole build cost me under £150 (2024)?
 
-Don't underestimate the amount/type/colour bolts you need.
+- Don't underestimate the amount/type/colour bolts you need.
 
-I *hate* doing Dupont crimps by hand, but I hate the idea of buying a tool more.
+- I *hate* doing Dupont crimps by hand, but I hate the idea of buying a tool more.
 
 ### arduino + shield + drivers
 
@@ -49,14 +49,7 @@ Once assesmbled, the plotter [needs calibrating](https://github.com/gnea/grbl/wi
 ### grbl (pen servo flavour)
 
 It isn't vanilla grbl we're using here, instead one of the many pen-servo variants (I think I used [this one](https://github.com/bdring/Grbl_Pen_Servo), but I can't recall now.).
-As outlined in the plotter design notes, you need to make a couple of modifications to the grbl library. I had to modify the pen-up/down positions in `spindle_control.c` before uploading to Arduino:
-
-```
-#define PEN_SERVO_DOWN     31      (maybe this should come up a little higher?)
-#define PEN_SERVO_UP       22
-```
-
-In the GCode this equates to `Z0` = pen down, and `Z>0` = pen up
+As outlined in the plotter design notes, you need to make a couple of modifications to the grbl library. I had to modify the pen-up/down positions in `spindle_control.c` before uploading to Arduino. Then in the gcode this equates to `Z0` = pen down, and `Z>0` = pen up
 
 ***
 
@@ -71,53 +64,21 @@ So the plotter is built, and everything is calibrated and tested. Pen and paper 
 
 #### exporting SVGs from p5js
 
-P5js doesn't support SVG export natively. Until recently we had to use the p5.js-svg library which has been out of date for a while. Golan Levin has now come to the rescue with [P5.PlotSVG](https://github.com/golanlevin/p5.plotSvg) - SVG rendering, specifically for pen plotters!
+P5js doesn't support SVG export natively. Until recently we had to use the p5.js-svg library which has been out of date for a while. Golan Levin has now come to the rescue with [P5.PlotSVG](https://github.com/golanlevin/p5.plotSvg) - SVG rendering, specifically for pen plotters! For the now depreciated use of exporting SVGs in p5js, [see here](P5js-plotting.md).
 
 ### command to convert .SVG into ready-to-print GCode
 
-`vpype -c config.toml read --no-crop input.svg layout a4 pagerotate occult -i linemerge linesort linesimplify reloop reloop gwrite --profile fast-plot output.gcode`
+`vpype -c config.toml read --no-crop input.svg layout a4 pagerotate occult -i linemerge linesort linesimplify gwrite -p fast-plot output.gcode`
 
-This loads the custom config .toml file, in your working directory. This is where I've set my plotter profiles which formats the gcode. Here is my default 'fast-plot' profile:
-
-#### vpype-gcode custom profiles
-
-```
-[gwrite.fast-plot]
-unit = "mm"
-document_start = """
-G90       ; absolute coordinates
-G21       ; mm units
-G17       ; xy plane
-G00 Z1    ; pen up"""
-
-layer_start = "(Start Layer)\n"
-line_start = "(Start Layer)\n"
-
-segment_first = """(Start Segment)
-G00 Z1 (pen up)
-G00 X{x:.4f} Y{y:.4f} (travel)
-G00 Z0(pen down)\n"""
-
-segment = """G00 X{x:.4f} Y{y:.4f}\n"""
-
-line_end = """(Line End)
-G00 Z1 (pen up)"""
-
-document_end = """(Document End)
-G00 Z1 (pen up)
-G00 X0.0 Y0.0
-M2"""
-
-invert_y = true
-
-info= "FAST PLOT. All G00 movements. Gcode ready to print. File created succesfully."
-```
+This loads the custom config .toml file, in your working directory. This is where I've set my plotter profiles which formats the gcode. [You can see an example of my config profile here](/thrly-config.toml) (my default is 'fast-plot')
 
 ## splitting a multi-coloured SVG into to multi-layer gcode
 
 Sometimes you'll want to plot in multiple pens, colours, etc. To do that, you can split an SVG into multiple layers, each layer getting its own gcode to plot (be careful to align your pen nib for each layer...)
 In vpype, read the svg, splitting layers by stroke (`read -a stroke`), then delete all layers, keeping the one you want (`ldelete --keep 1`)
+
 For example:
+
  First, inspect your layers to see which is which (take note of the layer number):
 
  `vpype read --no-crop -a stroke circle-packed.svg show`
@@ -131,6 +92,12 @@ For example:
 
 \[EDIT, Nov '24: that said, I think I've had some problems recently with alignment between layers, so maybe something is off here?]
 
+## plotter in action (video)
+
+[![a plotter is a robot that draws](https://img.youtube.com/vi/FBUoVaFsj6M/0.jpg)](https://www.youtube.com/watch?v=FBUoVaFsj6M)
+
+***
+
 ## Summary of resources
 
 - the **plotter** -  <https://github.com/andrewsleigh/plotter/tree/master>
@@ -139,15 +106,27 @@ For example:
 - **Processing** or **p5js** for designing generative stuff.
 - Inkscape -- I'm not using it for design/layout, but its occasionally useful for debugging a weird SVG file.
 - P5.PlotSVG - SVG rendering, specifically for pen plotters - <https://github.com/golanlevin/p5.plotSvg>
-- ~P5.js-SVG library, because P5js doesn't actually support SVGs (only working with P5js v. 1.6.0)- <https://github.com/zenozeng/p5.js-svg> (depreciated in my workflow)~
+- ~P5.js-SVG library, because P5js doesn't actually support SVGs (only working with P5js v. 1.6.0)- <https://github.com/zenozeng/p5.js-svg>~ (depreciated in my recent workflow)
 - **vpype** for optimising svg for plotting - <https://github.com/abey79/vpype>
 - **vpype-gcode** (plugin) for converting svg to gcode - <https://github.com/plottertools/vpype-gcode>
 - vpype **occult** (plugin) for hidden line removal
 - **cncjs** - <https://cnc.js.org/>
 
+## Reading list
+
+[See here](readingList.md) for a list of useful pen-plotting / generative art writing, talks, blogs, etc.
+
 ## Future plans
 
 - Switch v-slot aluminium and linear rods to fit A2 plots (or possibly move over to an H-frame design.)
 - Redesign pen holder to make servo more easily replaceable
+- Hook up a raspberry pi to run cncjs headless, so I can free up my computer and send plots over the network.
 
 ![a cat interfering with plotter setup](img/setup_cat.jpg)
+*Lilith vs the plotter*
+
+I've been logging some of my plots on instagram: <https://www.instagram.com/ot.x.y/>
+
+If you found any of this useful, please drop me a comment! 👋
+
+Oliver
