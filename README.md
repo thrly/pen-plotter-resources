@@ -6,11 +6,11 @@ notes from building and setting up a DIY pen plotter
 
 ## Building the plotter
 
-### What?
+### what?
 
 I've used the X-Y plotter design (like the Axidraw/Next draw) [designed by Andrew Sleigh (v3)](https://andrewsleigh.github.io/plotter/). The design is simple, and the build was easy to work out. Andrew's design and guide is *excellent*. There isn't more I need to add there, go and build it!
 
-### Notes on build
+### notes on build
 
 I 3D printed the parts (PLA seems fine) and opted for a 700mm v-slot X-axis, and a 500mm linear rails Y-axis. This gives me a working plotting area of about 420mm x 300 mm, which is frustratingly just a bit short to print A2 sized-plots. If I were doing this again, I would probably go for something more appropriate the A3. (Luckily, because DIY, I only have to buy a new v-slot and rails to upgrade).
 
@@ -28,7 +28,7 @@ The plotter runs off an Arduino (Elegoo R3) with a CNC shield (protoneer clone).
 
 For the CNC shield, note that you'll need to make a small modification in order to draw 12V power from the Arduino to power the motors, rather than use a second power supply. Sleigh mentions it in the guide, but don't overlook it.
 
-### modifications (TODO: add .stl files for these)
+### modifications
 
 [Sleigh's design](https://andrewsleigh.github.io/plotter/) worked brilliantly for me (apart from the Arduino box fit/print time), but I've made a few small modifications to the 3D printer parts:
 
@@ -36,7 +36,7 @@ For the CNC shield, note that you'll need to make a small modification in order 
 - [**Remixed Sleigh's pen holder design for fountain pens.** (STL files)](https://www.thingiverse.com/thing:6845438) - I've split this into two parts, allowing the pen-holder to rotate to 45 degrees. This allows it to be used with fountain pens, like the Axi/Next Draw. It's not perfect, I'll probably keep tweaking this. If you just want normal vertically mounted pens, use the Sleigh design.
 - **Foot risers.** This was to give more space for vertically mounted pens when I was printing on a seperate board. Now that I've mounted the plotter on a large MDF sheet, the risers are probably unneccessary. Also, with 45 degree fountain pens, the gap is actually a bit big... so I'll probably remove these soon.
 
-<img src="img/fountain_holder.jpg" width="45%" alt="pen plotter attachment holding a fountain pen at 45 degrees"/><img src="img/arduino_bracket.jpg" width="45%" alt="3D printed bracket holding arduino and cnc shield with fan"/>
+<img src="img/fountain_holder.jpg" width="50%" alt="pen plotter attachment holding a fountain pen at 45 degrees"/><img src="img/arduino_bracket.jpg" width="50%" alt="3D printed bracket holding arduino and cnc shield with fan"/>
 
 ### limit switches
 
@@ -46,8 +46,9 @@ Not essential, but I've recently added (x2) limit switches to the 0 ends of my x
 
 Once assesmbled, the plotter [needs calibrating](https://github.com/gnea/grbl/wiki/Grbl-v1.1-Configuration). Szymon Kaliski has some useful notes [here](https://szymonkaliski.com/writing/2023-10-02-building-a-diy-pen-plotter/#grbl). I found that [UGS](https://winder.github.io/ugs_website/) offers a helpful GUI wizard for calculating and setting things like travel resolution and limit/end-switches. You can also set these commands individually in the CNCJS console. This is obviously specific to every machine. As a starting point, my settings are here. (TOODO: add settings file)
 
-### GRBL (Pen Servo flavour)
+### grbl (pen servo flavour)
 
+It isn't vanilla grbl we're using here, instead one of the many pen-servo variants (I think I used [this one](https://github.com/bdring/Grbl_Pen_Servo), but I can't recall now.).
 As outlined in the plotter design notes, you need to make a couple of modifications to the grbl library. I had to modify the pen-up/down positions in `spindle_control.c` before uploading to Arduino:
 
 ```
@@ -146,7 +147,7 @@ For example:
 
 ## Future plans
 
-- Redesign pen holder to make servo more easily replaceable
 - Switch v-slot aluminium and linear rods to fit A2 plots (or possibly move over to an H-frame design.)
+- Redesign pen holder to make servo more easily replaceable
 
 ![a cat interfering with plotter setup](img/setup_cat.jpg)
