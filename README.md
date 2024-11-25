@@ -2,6 +2,8 @@
 
 notes from building and setting up a DIY pen plotter
 
+![pen plotter]("img\plotter in action.jpg")
+
 ## Building the plotter
 
 ### What?
@@ -33,6 +35,9 @@ Sleigh's design worked brilliantly for me (apart from the Arduino box fit/print 
 - **A new mounting bracket for the Arduino and CNC shield.** I found the original box didn't account for heat sinks, was fiddly to install and took a long time to print. I've opted for an open mount, with a bracket to hold a 40 mm fan pointed at the heat sinks which works well.
 - **Remixed Sleigh's pen holder design for fountain pens.** I've split this into two parts, allowing the pen-holder to rotate to 45 degrees. This allows it to be used with fountain pens, like the Axi/Next Draw. It's not perfect, I'll probably keep tweaking this. If you just want normal vertically mounted pens, use the Sleigh design.
 - **Foot risers.** This was to give more space for vertically mounted pens when I was printing on a seperate board. Now that I've mounted the plotter on a large MDF sheet, the risers are probably unneccessary. Also, with 45 degree fountain pens, the gap is actually a bit big... so I'll probably remove these soon.
+
+![pen plotter attachment holding a fountain pen at 45 degrees]("img\fountain holder.jpg")
+![3D printed bracket holding arduino and cnc shield with fan]("img\sarduino bracket.jpg")
 
 ### limit switches
 
@@ -148,3 +153,5 @@ For example:
 
 - add images
 - Add stl fils for my 3d print mods
+
+![a cat interfering with plotter setup]("img\setup with cat.jpg")
