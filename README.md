@@ -30,14 +30,13 @@ For the CNC shield, note that you'll need to make a small modification in order 
 
 ### modifications (TODO: add .stl files for these)
 
-Sleigh's design worked brilliantly for me (apart from the Arduino box fit/print time), but I've made a few small modifications to the 3D printer parts:
+[Sleigh's design](https://andrewsleigh.github.io/plotter/) worked brilliantly for me (apart from the Arduino box fit/print time), but I've made a few small modifications to the 3D printer parts:
 
-- **A new mounting bracket for the Arduino and CNC shield.** I found the original box didn't account for heat sinks, was fiddly to install and took a long time to print. I've opted for an open mount, with a bracket to hold a 40 mm fan pointed at the heat sinks which works well.
-- **Remixed Sleigh's pen holder design for fountain pens.** I've split this into two parts, allowing the pen-holder to rotate to 45 degrees. This allows it to be used with fountain pens, like the Axi/Next Draw. It's not perfect, I'll probably keep tweaking this. If you just want normal vertically mounted pens, use the Sleigh design.
+- [**A new mounting bracket for the Arduino and CNC shield.** (STL file)](https://www.thingiverse.com/thing:6845447) - I found the original box didn't account for heat sinks, was fiddly to install and took a long time to print. I've opted for an open mount, with a bracket to hold a 40 mm fan pointed at the heat sinks which works well.
+- [**Remixed Sleigh's pen holder design for fountain pens.** (STL files)](https://www.thingiverse.com/thing:6845438) - I've split this into two parts, allowing the pen-holder to rotate to 45 degrees. This allows it to be used with fountain pens, like the Axi/Next Draw. It's not perfect, I'll probably keep tweaking this. If you just want normal vertically mounted pens, use the Sleigh design.
 - **Foot risers.** This was to give more space for vertically mounted pens when I was printing on a seperate board. Now that I've mounted the plotter on a large MDF sheet, the risers are probably unneccessary. Also, with 45 degree fountain pens, the gap is actually a bit big... so I'll probably remove these soon.
 
-<img src="img/fountain_holder.jpg" width="50%" alt="pen plotter attachment holding a fountain pen at 45 degrees"/>
-<img src="img/arduino_bracket.jpg" width="50%" alt="3D printed bracket holding arduino and cnc shield with fan"/>
+<img src="img/fountain_holder.jpg" width="45%" alt="pen plotter attachment holding a fountain pen at 45 degrees"/><img src="img/arduino_bracket.jpg" width="45%" alt="3D printed bracket holding arduino and cnc shield with fan"/>
 
 ### limit switches
 
@@ -134,6 +133,7 @@ For example:
 ## Summary of resources
 
 - the **plotter** -  <https://github.com/andrewsleigh/plotter/tree/master>
+- my fountain pen holder - <https://www.thingiverse.com/thing:6845438>
 - **grbl** pen servo, running on the arduin + cnc shield - download and install instead of vanilla GRBL (install in the same way) <https://github.com/bdring/Grbl_Pen_Servo/tree/master>
 - **Processing** or **p5js** for designing generative stuff.
 - Inkscape -- I'm not using it for design/layout, but its occasionally useful for debugging a weird SVG file.
@@ -148,10 +148,5 @@ For example:
 
 - Redesign pen holder to make servo more easily replaceable
 - Switch v-slot aluminium and linear rods to fit A2 plots (or possibly move over to an H-frame design.)
-
-## TODO
-
-- add images
-- Add stl fils for my 3d print mods
 
 ![a cat interfering with plotter setup](img/setup_cat.jpg)
