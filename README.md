@@ -12,7 +12,7 @@ I've used the X-Y plotter (like the Axidraw/Next draw) [designed by Andrew Sleig
 
 ### reflections
 
-- I 3D printed the parts (PLA seems fine) and opted for a 700mm v-slot X-axis, and a 500mm linear rails Y-axis. This gives me a working plotting area of about 420mm x 300 mm, which is frustratingly just a bit short to print A2 sized-plots. If I were doing this again, I would probably go for something more appropriate the A3. (Luckily, because DIY, I only have to buy a new v-slot and rails to upgrade).
+- I 3D printed the parts (PLA seems fine) ~and opted for a 700mm v-slot X-axis, and a 500mm linear rails Y-axis. This gives me a working plotting area of about 420mm x 300 mm, which is frustratingly way too big for A3, and just a bit short to print A2 sized-plots.~ \[EDIT: I have now rebuilt this with an 800 mm v-slot for the X-axis, and 600 mm linear rods for the Y-axis. This now accomodates A2-sized paper (420 x 594 mm). The Y-axis droop isn't as bad as I had feared.\]
 
 - I have noticed some slight 'drooping' on the Y-axis arm, so going beyond the current size might cause problems there. If I do need to scale up, I might look at an H-system design, as seen in the [ACRO](https://www.instructables.com/ACRO-Openbuilds-Pen-Plotter-Arduino-With-GRBL-and-/), Unatek, and more recently, the Bantam ArtFrame designs.
 
@@ -118,7 +118,6 @@ For example:
 
 ## Future plans
 
-- Switch v-slot aluminium and linear rods to fit A2 plots (or possibly move over to an H-frame design.)
 - Redesign pen holder to make servo more easily replaceable
 - Hook up a raspberry pi to run cncjs headless, so I can free up my computer and send plots over the network.
 
