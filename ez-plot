@@ -1,0 +1,10 @@
+#!/bin/bash
+filename="$1"
+papersize="${2:-a3}"
+basename=$(basename "$filename" .svg)
+echo "plotting gcode for $basename..."
+
+vpype -c ./thrly-config.toml read --no-crop "$filename" \
+  pagesize --landscape "$papersize" linemerge reloop linesort \
+  forlayer gwrite -p medium-plot "$basename-%_name%.gcode" \
+  end

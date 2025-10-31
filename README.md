@@ -8,7 +8,7 @@ notes from building and setting up a DIY pen plotter
 
 ### what?
 
-I've used the X-Y plotter (like the Axidraw/Next draw) [designed by Andrew Sleigh (v3)](https://andrewsleigh.github.io/plotter/). The design is simple, and the build was easy enough to work out. Andrew's design and guide is *excellent*. There isn't more I need to add really, go and build it!
+I've used the X-Y plotter (like the Axidraw/Next draw) [designed by Andrew Sleigh (v3)](https://andrewsleigh.github.io/plotter/). The design is simple, and the build was easy enough to work out. Andrew's design and guide is _excellent_. There isn't more I need to add really, go and build it!
 
 ### reflections
 
@@ -20,7 +20,7 @@ I've used the X-Y plotter (like the Axidraw/Next draw) [designed by Andrew Sleig
 
 - Don't underestimate the amount/type/colour bolts you need.
 
-- I *hate* doing Dupont crimps by hand, but I hate the idea of buying a tool more.
+- I _hate_ doing Dupont crimps by hand, but I hate the idea of buying a tool more.
 
 ### arduino + shield + drivers
 
@@ -51,7 +51,7 @@ Once assesmbled, the plotter [needs calibrating](https://github.com/gnea/grbl/wi
 It isn't vanilla grbl we're using here, instead one of the many pen-servo variants (I think I used [this one](https://github.com/bdring/Grbl_Pen_Servo), but I can't recall now.).
 As outlined in the plotter design notes, you need to make a couple of modifications to the grbl library. I had to modify the pen-up/down positions in `spindle_control.c` before uploading to Arduino. Then in the gcode this equates to `Z0` = pen down, and `Z>0` = pen up
 
-***
+---
 
 ## Preparing to Plot - notes on my workflow
 
@@ -74,33 +74,46 @@ This loads the custom config .toml file, in your working directory. This is wher
 
 ## splitting a multi-coloured SVG into to multi-layer gcode
 
+For the most part, you can use the [./ez-plot] shell script (remember to set your privileges with `chmod +x ./ez-plot`, and potentially move into your `usr/bin` first), then using with `ez-plot filename.svg [papersize]`
+( Papersize defaults to A3 landscape. )
+
 Sometimes you'll want to plot in multiple pens, colours, etc. To do that, you can split an SVG into multiple layers, each layer getting its own gcode to plot (be careful to align your pen nib for each layer...)
-In vpype, read the svg, splitting layers by stroke (`read -a stroke`), then delete all layers, keeping the one you want (`ldelete --keep 1`)
+~In vpype, read the svg, splitting layers by stroke (`read -a stroke`), then delete all layers, keeping the one you want (`ldelete --keep 1`)~
 
-For example:
+~For example:~
 
- First, inspect your layers to see which is which (take note of the layer number):
+~First, inspect your layers to see which is which (take note of the layer number):~
 
- `vpype read --no-crop -a stroke circle-packed.svg show`
+~`vpype read --no-crop -a stroke circle-packed.svg show`~
 
- Then run the command to render your gcode for the desired layer:
+~Then run the command to render your gcode for the desired layer:~
 
- `vpype -c thrly-config.toml read --no-crop -a stroke circle-packed.svg layout -m 3cm 282x210mm pagerotate ldelete --keep 1 linemerge reloop linesort gwrite -p fast-plot circle-pack-layer-1.gcode`
+~`vpype -c thrly-config.toml read --no-crop -a stroke circle-packed.svg layout -m 3cm 282x210mm pagerotate ldelete --keep 1 linemerge reloop linesort gwrite -p fast-plot circle-pack-layer-1.gcode`~
 
- Ensure that you delete the layers *after* setting your layout/scale/position, otherwise the layers will be out of alignment with each other.
- Then repeat for each layer.
+~Ensure that you delete the layers _after_ setting your layout/scale/position, otherwise the layers will be out of alignment with each other.~
+~Then repeat for each layer.~
 
-\[EDIT, Nov '24: that said, I think I've had some problems recently with alignment between layers, so maybe something is off here?]
+~\[EDIT, Nov '24: that said, I think I've had some problems recently with alignment between layers, so maybe something is off here?]~
+
+UPDATE: the following seems like a better workflow for splitting all layers, rather than using `ldelete`:
+`vpype -c thrly-config.toml read --no-crop filename.svg pagesize --landscape a3 linemerge reloop linesort forlayer gwrite -p fast2-plot "_name%_lid%.gcode" end`
+
+Also, early testing suggests that adding the following to the gwrite profile config (.toml) helps with the "correct" layer alignment
+
+```
+invert_y = false
+vertical_flip = true
+```
 
 ## plotter in action (video)
 
 [![a plotter is a robot that draws](https://img.youtube.com/vi/FBUoVaFsj6M/0.jpg)](https://www.youtube.com/watch?v=FBUoVaFsj6M)
 
-***
+---
 
 ## Summary of resources
 
-- the **plotter** -  <https://github.com/andrewsleigh/plotter/tree/master>
+- the **plotter** - <https://github.com/andrewsleigh/plotter/tree/master>
 - my fountain pen holder - <https://www.thingiverse.com/thing:6845438>
 - **grbl** pen servo, running on the arduin + cnc shield - download and install instead of vanilla GRBL (install in the same way) <https://github.com/bdring/Grbl_Pen_Servo/tree/master>
 - **Processing** or **p5js** for designing generative stuff.
@@ -122,10 +135,14 @@ For example:
 - Hook up a raspberry pi to run cncjs headless, so I can free up my computer and send plots over the network.
 
 ![a cat interfering with plotter setup](img/setup_cat.jpg)
-*Lilith vs the plotter*
+_Lilith vs the plotter_
 
 I've been logging some of my plots on instagram: <https://www.instagram.com/ot.x.y/>
 
 If you found any of this useful, please drop me a comment! 👋
 
 Oliver
+
+```
+
+```
