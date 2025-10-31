@@ -27,10 +27,13 @@ G00 Z1 (pen up)
 G00 X0.0 Y0.0
 M2"""
 
-invert_y = true
+invert_y = false
+vertical_flip = true
 
 info= "FAST PLOT. All G00 movements. Gcode ready to print. File created succesfully."
 
+########################################################################################################################
+# Custom Profile test
 ########################################################################################################################
 [gwrite.medium-plot]
 unit = "mm"
@@ -45,22 +48,26 @@ line_start = "(Start Layer)\n"
 
 segment_first = """(Start Segment)
 G00 Z1 (pen up)
-G01 X{x:.4f} Y{y:.4f} F5000 (travel at F-speed)
-G00 Z0(pen down)\n"""
+G01 X{x:.4f} Y{y:.4f} F5000 (travel)
+G04 P0.5 (pause)
+G00 Z0(pen down)
+"""
 
-segment = """G01 X{x:.4f} Y{y:.4f} F5000\n"""
+segment = """G01 X{x:.4f} Y{y:.4f} F1000\n"""
 
 line_end = """(Line End)
-G00 Z1 (pen up)"""
+G00 Z1 (pen up)
+"""
 
 document_end = """(Document End)
 G00 Z1 (pen up)
 G00 X0.0 Y0.0
 M2"""
 
-invert_y = true
+invert_y = false
+vertical_flip = true
 
-info= "MEDIUM PLOT. All G01 F5000 draw movements. Gcode ready to print. File created succesfully."
+info= "MEDIUM PLOT. F1000 moves, with 0.5 second dwell. Gcode ready to print. File created succesfully."
 
 ########################################################################################################################
 [gwrite.slow-plot]
@@ -76,14 +83,14 @@ line_start = "(Start Layer)\n"
 
 segment_first = """(Start Segment)
 G00 Z1 (pen up)
-G01 X{x:.4f} Y{y:.4f} F1000 (travel at F-speed)
+G01 X{x:.4f} Y{y:.4f} F500 (travel at F-speed)
 G00 Z0(pen down)
-G04 P200 (pause 200 ms)\n"""
+G04 P0.5 (pause 500 ms)\n"""
 
-segment = """G01 X{x:.4f} Y{y:.4f} F1000\n"""
+segment = """G01 X{x:.4f} Y{y:.4f} F500\n"""
 
 line_end = """(Line End)
-G04 P200 (pause 200 ms)
+G04 P0.1 (pause 100 ms)
 G00 Z1 (pen up)"""
 
 document_end = """(Document End)
@@ -91,6 +98,7 @@ G00 Z1 (pen up)
 G00 X0.0 Y0.0
 M2"""
 
-invert_y = true
+invert_y = false
+vertical_flip = true
 
-info= "SLOW PLOT. All G01 F1000 draw movements. Gcode ready to print. File created succesfully."
+info= "SLOW PLOT. All G01 F500 draw movements. Gcode ready to print. File created succesfully."
